@@ -14,7 +14,7 @@ function Square({ value, onSquareClick }) {
 
 export default function Game() {
     const [squares, setSquares] = useState(Array(9).fill(null))
-    const [player, setPlayer] = useState("X")
+    const [player, setPlayer] = useState("O")
 
     function checkWin() {
         let winPos = [
@@ -33,16 +33,19 @@ export default function Game() {
                 console.log("Player " + player + " won!");
             }
         }
+        setPlayer(player === "X" ? "O" : "X")
     }
 
     function handleClick(id) {
         // console.log(id);
         let newSquares = squares.slice()
         newSquares[id] = player
-        checkWin()
-        setPlayer(player === "X" ? "O" : "X")
         setSquares(newSquares)
     }
+
+    useEffect(() => {
+        checkWin()
+    }, [squares])
 
     return (
         <div className="game">
@@ -54,6 +57,8 @@ export default function Game() {
         </div>
     )
 }
+
+// Restart button
 
 // export default function Button() {
 //   const [click, setClick] = useState(0)
