@@ -39,6 +39,7 @@ p {
 }
 
 button {
+  cursor: pointer;
   width: calc(33.3333333333% - 10px);
   margin: 5px;
   border: none;
@@ -64,4 +65,53 @@ button:hover {
   transform: translateY(5px);
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
   pointer-events: none;
+}
+
+.sideMenu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(calc(100% + 15px));
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+.sideMenu div {
+  position: relative;
+}
+.sideMenu div:hover ul {
+  opacity: 1;
+  max-width: 250px;
+}
+.sideMenu div button {
+  width: 80px;
+  height: 80px;
+  display: block;
+  line-height: 80px;
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+.sideMenu div ul {
+  list-style: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(100%, -50%);
+  border-radius: 0 15px 15px 0;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: 0.5s;
+  max-width: 0;
+}
+.sideMenu div ul li {
+  display: inline-block;
+  line-height: 50px;
+  padding: 0 15px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.sideMenu div ul li:hover {
+  background-color: #d4e4ff;
 }/*# sourceMappingURL=App.css.map */

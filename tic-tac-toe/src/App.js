@@ -51,9 +51,32 @@ export default function Game() {
         <div className="game">
             <h1>Tic Tac Toe</h1>
             <p>Next player: {player}</p>
+            {/* restart button here */}
             {squares.map((element, id) => (
                 <Square value={element} key={id} onSquareClick={() => handleClick(id)}></Square>
             ))}
+            <div className="sideMenu">
+                <div className="customPlayerA">
+                    <button>X</button>
+                    <ul>
+                        <li>X</li>
+                        <li>O</li>
+                        <li>🐶</li>
+                        <li>🍀</li>
+                        <li>💡</li>
+                    </ul>
+                </div>
+                <div className="customPlayerB">
+                    <button>O</button>
+                    <ul>
+                        <li>X</li>
+                        <li>O</li>
+                        <li>🐶</li>
+                        <li>🍀</li>
+                        <li>💡</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     )
 }
