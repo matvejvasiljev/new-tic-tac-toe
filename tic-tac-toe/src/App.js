@@ -14,7 +14,8 @@ function Square({ value, onSquareClick }) {
 
 export default function Game() {
     const [squares, setSquares] = useState(Array(9).fill(null))
-    const [player, setPlayer] = useState("O")
+    const [player, setPlayer] = useState("X")
+    const [info, setInfo] = useState("Next player: ")
 
     function checkWin() {
         let winPos = [
@@ -27,13 +28,20 @@ export default function Game() {
             [1, 4, 7],
             [2, 5, 8],
         ]
-        console.log(player);
         for (let i of winPos) {
-            if (squares[i[0]] === player && squares[i[1]] === player && squares[i[2]] === player) {
-                console.log("Player " + player + " won!");
+            // if (squares[i[0]] === player && squares[i[1]] === player && squares[i[2]] === player) {
+            //     console.log("Player " + player + " won!");
+            // }
+            const [a, b, c] = i
+            // if (!squares.includes(null)) {
+            //     console.log("It's a draw");
+            // }
+            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+                console.log("Player " + squares[a] + " won!");
+                return squares[a]
             }
         }
-        setPlayer(player === "X" ? "O" : "X")
+        return null
     }
 
     function handleClick(id) {
@@ -41,20 +49,36 @@ export default function Game() {
         let newSquares = squares.slice()
         newSquares[id] = player
         setSquares(newSquares)
+        setPlayer(player === "X" ? "O" : "X")
     }
 
-    useEffect(() => {
-        checkWin()
-    }, [squares])
+    function handleRestart() {
+        setSquares(Array(9).fill(null))
+        setPlayer("X")
+    }
+
+    // useEffect(() => {
+    //     checkWin()
+    // }, [squares])
+
+    let winner = checkWin()
+
+    // if (winner) {
+    //     setInfo("Winner: ")
+    // }
 
     return (
         <div className="game">
             <h1>Tic Tac Toe</h1>
-            <p>Next player: {player}</p>
-            {/* restart button here */}
-            {squares.map((element, id) => (
-                <Square value={element} key={id} onSquareClick={() => handleClick(id)}></Square>
-            ))}
+            <p>{winner ? "Winner: " + winner : !squares.includes(null) ? "Draw" : "Next player: " + player} </p>
+            <button id="restartButton" onClick={() => handleRestart()}>
+                <img src="../restart.svg" alt="" />
+            </button>
+            <div className="buttons" style={winner ? { pointerEvents: "none" } : { pointerEvents: "auto" } }>
+                {squares.map((element, id) => (
+                    <Square value={element} key={id} onSquareClick={() => handleClick(id)}></Square>
+                ))}
+            </div>
             <div className="sideMenu">
                 <div className="customPlayerA">
                     <button>X</button>
