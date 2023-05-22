@@ -6,7 +6,7 @@ function Square({ value, onSquareClick }) {
     const [height, setHeight] = useState(0)
     useEffect(() => {
         setHeight(b.current.offsetWidth)
-    })
+    }, [])
     return (
         <button onClick={onSquareClick} ref={b} style={{ height: height + "px" }} className={value !== null ? "pressedButton" : ""}>{value}</button>
     )
@@ -15,7 +15,9 @@ function Square({ value, onSquareClick }) {
 export default function Game() {
     const [squares, setSquares] = useState(Array(9).fill(null))
     const [player, setPlayer] = useState("X")
-    const [info, setInfo] = useState("Next player: ")
+    const [player1, setPlayer1] = useState("X")
+    const [player2, setPlayer2] = useState("O")
+    const symbols = ["X", "O", "🐶", "🍀", "💡"]
 
     function checkWin() {
         let winPos = [
@@ -49,17 +51,21 @@ export default function Game() {
         let newSquares = squares.slice()
         newSquares[id] = player
         setSquares(newSquares)
-        setPlayer(player === "X" ? "O" : "X")
+        setPlayer(player === player1 ? player2 : player1)
     }
 
     function handleRestart() {
         setSquares(Array(9).fill(null))
-        setPlayer("X")
+        setPlayer(player1)
     }
 
     // useEffect(() => {
     //     checkWin()
     // }, [squares])
+
+    useEffect(() => {
+        handleRestart()
+    }, [player1, player2])
 
     let winner = checkWin()
 
@@ -74,30 +80,26 @@ export default function Game() {
             <button id="restartButton" onClick={() => handleRestart()}>
                 <img src="../restart.svg" alt="" />
             </button>
-            <div className="buttons" style={winner ? { pointerEvents: "none" } : { pointerEvents: "auto" } }>
+            <div className="buttons" style={winner ? { pointerEvents: "none" } : { pointerEvents: "auto" }}>
                 {squares.map((element, id) => (
                     <Square value={element} key={id} onSquareClick={() => handleClick(id)}></Square>
                 ))}
             </div>
             <div className="sideMenu">
                 <div className="customPlayerA">
-                    <button>X</button>
+                    <button>{player1}</button>
                     <ul>
-                        <li>X</li>
-                        <li>O</li>
-                        <li>🐶</li>
-                        <li>🍀</li>
-                        <li>💡</li>
+                        {symbols.map((symbol, id) => (
+                            <li style={symbol === player2 ? {pointerEvents: "none", opacity: 0.3} : {}} onClick={() => setPlayer1(symbol)} key={id}>{symbol}</li>
+                        ))}
                     </ul>
                 </div>
                 <div className="customPlayerB">
-                    <button>O</button>
+                    <button>{player2}</button>
                     <ul>
-                        <li>X</li>
-                        <li>O</li>
-                        <li>🐶</li>
-                        <li>🍀</li>
-                        <li>💡</li>
+                        {symbols.map((symbol, id) => (
+                            <li style={symbol === player1 ? {pointerEvents: "none", opacity: 0.3} : {}} onClick={() => setPlayer2(symbol)} key={id}>{symbol}</li>
+                        ))}
                     </ul>
                 </div>
             </div>

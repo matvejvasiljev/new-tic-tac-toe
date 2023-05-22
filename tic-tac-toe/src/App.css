@@ -119,6 +119,7 @@ button:hover {
   max-width: 0;
 }
 .sideMenu div ul li {
+  font-size: 22px;
   display: inline-block;
   line-height: 50px;
   padding: 0 15px;
